@@ -1,15 +1,13 @@
 from BaseApp import BasePage
 from selenium.webdriver.common.by import By
-
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-import os
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class YandexSearchLocators:
     LOCATOR_YA_SEARCH_FIELD = (By.ID, "text")
     LOCATOR_YA_SUGGEST = (By.CLASS_NAME, "mini-suggest__popup-content")
-    LOCATOR_YA_SEARCH_BUTTON = (By.CLASS_NAME, "search2__button")
+    LOCATOR_YA_SEARCH_BUTTON = (By.XPATH, "//button[@type='submit']")
+    LOCATOR_YA_SEARCH_RESULT = (By.CLASS_NAME, "content__left")
 
 class YaSearchPage(BasePage):
     def enter_word(self, word):
@@ -19,21 +17,15 @@ class YaSearchPage(BasePage):
         return search_field
 
     def view_suggest_field(self):
-        suggest_field = self.find_element(YandexSearchLocators.LOCATOR_YA_SUGGEST,time=5)
-        return suggest_field.text
+        suggest_field = self.find_element(YandexSearchLocators.LOCATOR_YA_SUGGEST,time=15)
+        actions = ActionChains(self.driver)
+        actions.move_to_element(suggest_field)
+        actions.perform()
+
+        return suggest_field
 
     def click_search_button(self):
         return self.find_element(YandexSearchLocators.LOCATOR_YA_SEARCH_BUTTON).click()
 
-
-driver = webdriver.Firefox()
-#driver.get('https://yandex.ru')
-
-main = YaSearchPage(driver)
-main.to_site()
-main.enter_word("Тензор")
-x = main.view_suggest_field()
-print(x)
-print(x.split())
-
-driver.quit()
+    def view_search_result(self):
+        return self.find_element(YandexSearchLocators.LOCATOR_YA_SEARCH_RESULT)
