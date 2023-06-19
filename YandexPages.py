@@ -13,6 +13,8 @@ class YandexSearchLocators:
     LOCATOR_YA_FIRST_RESULT_IF_AD = (By.XPATH, "//li[@data-cid='1']")
     LOCATOR_YA_FIRST_RESULT_HREF = (By.XPATH, "//*[@id='search-result']/li[1]/div/div[2]/div[1]/a")
 
+    LOCATOR_YA_SERVICE_BUTTONS = (By.CLASS_NAME, "services-suggest__list")
+
 class YaSearchPage(BasePage):
     def check_search_field(self):
         search_field = self.find_element(YandexSearchLocators.LOCATOR_YA_SEARCH_FIELD)
@@ -49,3 +51,11 @@ class YaSearchPage(BasePage):
         href = first_result.find_element(*YandexSearchLocators.LOCATOR_YA_FIRST_RESULT_HREF).get_attribute("href")
 
         return str(href)
+
+
+class YaPicPage(BasePage):
+    def check_service_btns(self):
+        search_field = self.find_element(YandexSearchLocators.LOCATOR_YA_SEARCH_FIELD).click()
+        service_btns = self.find_elements(YandexSearchLocators.LOCATOR_YA_SERVICE_BUTTONS)
+
+        return service_btns

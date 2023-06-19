@@ -1,5 +1,5 @@
 from YandexPages import  YaSearchPage
-from selenium.webdriver.common.by import By
+
 
 def test_search_field(browser):
     yandex_main = YaSearchPage(browser)
