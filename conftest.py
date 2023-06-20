@@ -12,6 +12,7 @@ def browser():
     options.add_argument("--no-default-browser-check")  # Overrides default choices
     options.add_argument("--no-first-run")
     options.add_argument("--disable-default-apps")
+    options.add_argument('--ignore-certificate-errors-spki-list')
 
     driver = webdriver.Chrome(service=service, options=options)
 

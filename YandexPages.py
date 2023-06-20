@@ -14,6 +14,14 @@ class YandexSearchLocators:
     LOCATOR_YA_FIRST_RESULT_HREF = (By.XPATH, "//*[@id='search-result']/li[1]/div/div[2]/div[1]/a")
 
     LOCATOR_YA_SERVICE_BUTTONS = (By.CLASS_NAME, "services-suggest__list")
+    LOCATOR_YA_SERVICE_BUTTON_ALL = (By.CLASS_NAME, "services-suggest__list-item-more")
+    LOCATOR_YA_SERVICE_BUTTON_PICTURE = (By.XPATH, "//a[@aria-label='Картинки']")
+    LOCATOR_YA_PICTURE_NAV_TAB = (By.XPATH, "//*[@role='main']")
+    LOCATOR_YA_PICTURE_POPULAR_REQUESTS = (By.XPATH, "//div[@class='PopularRequestList']/div[1]")
+    LOCATOR_YA_PICTURE_INPUT_BOX = (By.XPATH, "//span[@class='input__box']/input")
+    LOCATOR_YA_PICTURE_FIRST_PIC = (By.CLASS_NAME, "serp-item__preview")
+    LOCATOR_YA_PICTURE_OPENED_PIC = (By.CLASS_NAME, "MMImage-Preview")
+    LOCATOR_YA_PICTURE_PREV_NEXT = (By.CLASS_NAME, "CircleButton-Icon")
 
 class YaSearchPage(BasePage):
     def check_search_field(self):
@@ -59,3 +67,24 @@ class YaPicPage(BasePage):
         service_btns = self.find_elements(YandexSearchLocators.LOCATOR_YA_SERVICE_BUTTONS)
 
         return service_btns
+
+    def click_service_pic(self):
+        service_all = self.find_element(YandexSearchLocators.LOCATOR_YA_SERVICE_BUTTON_ALL).click()
+        pic_btn = self.find_element(YandexSearchLocators.LOCATOR_YA_SERVICE_BUTTON_PICTURE).click()
+        self.switch_to_window()
+        return self.find_element(YandexSearchLocators.LOCATOR_YA_PICTURE_NAV_TAB, time=15)
+
+    def switch_to_window(self):
+        self.driver.switch_to.window(self.driver.window_handles[1])
+
+    def check_popular_category(self):
+        popular_req = self.find_element(YandexSearchLocators.LOCATOR_YA_PICTURE_POPULAR_REQUESTS, time=15)
+        popular_req.click()
+        input_field = self.find_element(YandexSearchLocators.LOCATOR_YA_PICTURE_INPUT_BOX)
+        return popular_req.text, input_field.get_attribute("value")
+
+    def open_first_pic(self):
+        pics = self.find_elements(YandexSearchLocators.LOCATOR_YA_PICTURE_FIRST_PIC)
+        pics[0].click()
+        return self.find_element(YandexSearchLocators.LOCATOR_YA_PICTURE_OPENED_PIC)
+
