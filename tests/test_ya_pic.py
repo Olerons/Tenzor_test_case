@@ -1,5 +1,6 @@
 from YandexPages import YaPicPage
 
+href_first_pic = ''
 
 def test_menu_button(browser):
     yandex_main = YaPicPage(browser)
@@ -22,16 +23,20 @@ def test_open_pic(browser):
     assert picture.is_displayed()
 
 def test_open_second_pic(browser):
+    global href_first_pic
+
     yandex_main = YaPicPage(browser)
-    first_pic = yandex_main.get_original_pic()
-    browser.add_cookie({'name': 'fp_test', 'first_pic': first_pic})
+    href_first_pic = yandex_main.get_original_pic()
     yandex_main.next_pic()
     second_pic = yandex_main.get_original_pic()
-    assert first_pic != second_pic
+    assert href_first_pic != second_pic
 
 def test_check_prev_pic(browser):
+    global href_first_pic
+
     yandex_main = YaPicPage(browser)
     yandex_main.prev_pic()
     prev_pic = yandex_main.get_original_pic()
-    first_pic = browser.get_cookies()[-1]
-    assert prev_pic == first_pic
+
+    assert prev_pic == href_first_pic
+

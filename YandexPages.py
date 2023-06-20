@@ -23,7 +23,7 @@ class YandexSearchLocators:
     LOCATOR_YA_PICTURE_INPUT_BOX = (By.XPATH, "//span[@class='input__box']/input")
     LOCATOR_YA_PICTURE_FIRST_PIC = (By.CLASS_NAME, "serp-item__preview")
     LOCATOR_YA_PICTURE_OPENED_PIC = (By.CLASS_NAME, "MMImage-Preview")
-    LOCATOR_YA_PICTURE_OPENED_PIC_FULL = (By.CLASS_NAME, "MMImage-Origin")
+    #LOCATOR_YA_PICTURE_OPENED_PIC_FULL = (By.CLASS_NAME, "MMImage-Origin")
     LOCATOR_YA_PICTURE_GALLERY = (By.TAG_NAME, "body")
     LOCATOR_YA_PICTURE_CHECK_AD = (By.CLASS_NAME, "DirectLabel DirectOffersHeader-Ad")
     LOCATOR_YA_PICTURE_FIRST_PIC_IF_AD = (By.XPATH, "//div[@class='serp-controller__content']/div/div[2]")
@@ -90,8 +90,8 @@ class YaPicPage(BasePage):
 
     def open_first_pic(self):
         try:
-            if self.find_element(YandexSearchLocators.LOCATOR_YA_PICTURE_CHECK_AD).text == "Реклама":
-                self.first_pic(YandexSearchLocators.LOCATOR_YA_PICTURE_FIRST_PIC_IF_AD).click()
+            if self.find_element(YandexSearchLocators.LOCATOR_YA_PICTURE_CHECK_AD).text.lower() == "реклама":
+                self.find_element(YandexSearchLocators.LOCATOR_YA_PICTURE_FIRST_PIC_IF_AD).click()
             else:
                 self.find_elements(YandexSearchLocators.LOCATOR_YA_PICTURE_FIRST_PIC)[0].click()
         except Exception:
@@ -101,7 +101,7 @@ class YaPicPage(BasePage):
         return self.first_pic
 
     def get_original_pic(self):
-        return self.find_element(YandexSearchLocators.LOCATOR_YA_PICTURE_OPENED_PIC_FULL).get_attribute("src")
+        return self.find_element(YandexSearchLocators.LOCATOR_YA_PICTURE_OPENED_PIC).get_attribute("src")
 
     def next_pic(self):
         self.find_element(YandexSearchLocators.LOCATOR_YA_PICTURE_GALLERY).send_keys(Keys.ARROW_RIGHT)

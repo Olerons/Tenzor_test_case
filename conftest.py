@@ -1,5 +1,6 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 import os
 
@@ -13,6 +14,8 @@ def browser():
     options.add_argument("--no-first-run")
     options.add_argument("--disable-default-apps")
     options.add_argument('--ignore-certificate-errors-spki-list')
+    options.add_argument('--ignore-certificate-errors')
+    options.add_argument('--ignore-ssl-errors')
 
     driver = webdriver.Chrome(service=service, options=options)
 
