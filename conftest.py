@@ -6,7 +6,8 @@ import os
 @pytest.fixture(scope="session")
 def browser():
     # -- > Chrome
-    service = Service(executable_path=os.path.abspath(r'driver\chromedriver.exe'))
+    #service = Service(executable_path=os.path.abspath(r'driver\chromedriver.exe'))
+    service = Service()
     options = webdriver.ChromeOptions()
     options.add_argument("--no-sandbox")  # This make Chromium reachable
     options.add_argument("--no-default-browser-check")  # Overrides default choices
